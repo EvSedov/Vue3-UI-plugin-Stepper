@@ -15,39 +15,42 @@
       <div class="steps">
         <div class="steps-content">
           <!-- Сюда необходимо вывести текст активного шага по его индексу -->
-          <p>{{ steps[activeIndex]['text'] }}</p>
+          <p>{{ steps[activeIndex].text }}</p>
         </div>
-        <ul class="steps-list" ref="stepsList">
-          <li class="steps-item active" @click="setActive">
-            <span>1</span>&nbsp;
-            <strong>{{ steps[0]['title'] }}</strong>
-          </li>
-          <li class="steps-item" @click="setActive">
-            <span>2</span>&nbsp;
-            <strong>{{ steps[1]['title'] }}</strong>
-          </li>
-          <li class="steps-item" @click="setActive">
-            <span>3</span>&nbsp;
-            <strong>{{ steps[2]['title'] }}</strong>
-          </li>
-          <li class="steps-item" @click="setActive">
-            <span>4</span>&nbsp;
-            <strong>{{ steps[3]['title'] }}</strong>
-          </li>
-          <li class="steps-item" @click="setActive">
-            <span>5</span>&nbsp;
-            <strong>{{ steps[4]['title'] }}</strong>
+        <ul class="steps-list">
+          <li 
+            :class="[
+              'steps-item',
+              { 'active': index === activeIndex },
+              { 'done': index < activeIndex }
+            ]"
+            @click="setActive"
+            v-for="(step, index) of steps"
+          >  
+            <span> {{ index + 1 }}</span>&nbsp;
+            <strong>{{ step.title }}</strong>
           </li>
         </ul>
         <div>
-          <button class="btn" @click="prev" ref="btnBack" :disabled="disabledBtnBack">Назад</button>
-          <button class="btn primary" @click="nextOfFinish" ref="btnNext">Вперед</button>
+          <button 
+            class="btn"
+            @click="prev"
+            :disabled="disabledBtnBack"
+          >{{ titleBtnBack }}</button>
+          <button
+            class="btn primary"
+            @click="nextOfFinish"
+            :style="{
+              display: styleBtnNext,
+            }"
+          >{{ titleBtnNext }}</button>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/vue@next"></script>
+  <!-- <script src="https://unpkg.com/vue@next"></script> -->
+  <script src="../vue.global.js"></script>
   <script src="vue.js"></script>
   </body>
 </html>

@@ -13,70 +13,52 @@ const App = {
         { title: 'Vuex', text: 'В блоке вы узнаете абсолютно все про Vuex. Вы узнаете как работать с данными, какие есть лучшие практики по их программированию и структурированию. Все на практике.' },
         { title: 'Composition', text: 'Одним из наиболее важных обновлений в Vue 3 является появление альтернативного синтаксиса Composition API. В этом блоке вы узнаете все, чтобы полностью пользоваться данными синтаксисом на практических примерах. Помимо этого вы узнаете как работать совместно с Vue Router и Vuex.' },
       ],
+      titleBtnBack: 'НАЗАД',
+      titleBtnNext: 'ВПЕРЕД',
+      styleBtnNext: '',
     }
   },
   methods: {
     prev() {
       // когда нажимаем кнопку назад
-      const steps = this.$refs.stepsList.childNodes;
-      steps[this.activeIndex].classList.remove('active');
-      this.activeIndex = this.countStep - 1;
-      steps[this.activeIndex].classList.remove('done');
-      steps[this.activeIndex].classList.add('active');
-      if (this.isEndStep) {
-        this.$refs.btnNext.innerText = "ЗАКОНЧИТЬ";
-      } else {
-        this.$refs.btnNext.innerText = "ВПЕРЕД";
+      if (!this.disabledBtnBack && this.titleBtnBack === 'НАЗАД') {
+        this.activeIndex -= 1;
+      }
+      if (!this.isEndStep) {
+        this.titleBtnNext = 'ВПЕРЕД';
+      }
+      if (this.titleBtnBack === 'НАЧАТЬ ЗАНОВО') {
+        this.reset();
       }
     },
     reset() {
       // начать заново
-    },
-    nextOfFinish() {
-      // кнопка вперед или закончить
-      if (this.$refs.btnNext.innerText === 'ЗАКОНЧИТЬ') {
-        this.$refs.btnBack.outerHTML = `<button class="btn" onClick="window.location.reload()" ref="btnBack">НАЧАТЬ ЗАНОВО</button>`;
-        this.$refs.btnNext.style.display = 'none';
-      } else {
-        const steps = this.$refs.stepsList.childNodes;
-        steps[this.activeIndex].classList.remove('active');
-        steps[this.activeIndex].classList.add('done');
-        this.activeIndex = this.countStep + 1;
-        steps[this.activeIndex].classList.add('active');
-        if (this.isEndStep) {
-          this.$refs.btnNext.innerText = "ЗАКОНЧИТЬ";
-        } else {
-          this.$refs.btnNext.innerText = "ВПЕРЕД";
-        }
-      }
+      window.location.reload();
       
+    },
+    nextOfFinish(e) {
+      // кнопка вперед или закончить
+      if (!this.isEndStep) {
+        this.activeIndex += 1;
+      }
+      if (this.titleBtnNext === 'ЗАКОНЧИТЬ') {
+        this.styleBtnNext = 'none';
+        this.titleBtnBack = 'НАЧАТЬ ЗАНОВО'
+      }
+      if (this.isEndStep) {
+        this.titleBtnNext = 'ЗАКОНЧИТЬ';
+      }
       
     },
     setActive(e) {
       // когда нажимаем на определенный шаг
-      const steps = this.$refs.stepsList.childNodes;
-      const clickElement = e.target.parentNode;
-      steps.forEach((step) => {
-        step.classList.remove('done');
-        if (step.classList.contains('active')) {
-          step.classList.remove('active');
-        }
-      });
-      clickElement.classList.add('active');
-      steps.forEach((step, index) => {
-        if (step.classList.contains('active')) {
-          this.activeIndex = index;
-        }
-      });
-      steps.forEach((step, index) => {
-        if (index < this.countStep) {
-          step.classList.add('done');
-        }
-      });
+      this.activeIndex = Number(e.target.textContent) - 1;
       if (this.isEndStep) {
-        this.$refs.btnNext.innerText = "ЗАКОНЧИТЬ";
+        this.titleBtnNext = 'ЗАКОНЧИТЬ';
       } else {
-        this.$refs.btnNext.innerText = "ВПЕРЕД";
+        this.styleBtnNext = '';
+        this.titleBtnNext = 'ВПЕРЕД';
+        this.titleBtnBack = 'НАЗАД'
       }
     }
   },
