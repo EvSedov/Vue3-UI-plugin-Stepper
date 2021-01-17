@@ -15,7 +15,7 @@
       <div class="steps">
         <div class="steps-content">
           <!-- Сюда необходимо вывести текст активного шага по его индексу -->
-          <p>{{ steps[activeIndex].text }}</p>
+          <p v-if="countStep !== steps.length">{{ steps[activeIndex].text }}</p>
         </div>
         <ul class="steps-list">
           <li 
@@ -36,7 +36,7 @@
             class="btn"
             @click="prev"
             :disabled="disabledBtnBack"
-            v-if="!isOnClickBtnEnd"
+            v-if="!isClickBtnEnd"
           >НАЗАД</button>
           <button 
             class="btn"
@@ -52,7 +52,7 @@
             class="btn primary"
             @click="nextOfFinish"
             v-else
-            :style="{display: isOnClickBtnEnd ? 'none' : ''}"
+            :style="{'display': isClickBtnEnd ? 'none' : ''}"
           >ЗАКОНЧИТЬ</button>
         </div>
       </div>

@@ -13,36 +13,32 @@ const App = {
         { title: 'Vuex', text: 'В блоке вы узнаете абсолютно все про Vuex. Вы узнаете как работать с данными, какие есть лучшие практики по их программированию и структурированию. Все на практике.' },
         { title: 'Composition', text: 'Одним из наиболее важных обновлений в Vue 3 является появление альтернативного синтаксиса Composition API. В этом блоке вы узнаете все, чтобы полностью пользоваться данными синтаксисом на практических примерах. Помимо этого вы узнаете как работать совместно с Vue Router и Vuex.' },
       ],
-      isOnClickBtnEnd: false,
+      isClickBtnEnd: false,
     }
   },
   methods: {
     prev() {
       // когда нажимаем кнопку назад
-      if (!this.disabledBtnBack) {
-        this.activeIndex -= 1;
-      }
-      if (!this.isEndStep) {
-        this.isOnClickBtnEnd = false;
-      }
+      this.activeIndex -= 1;
     },
     reset() {
       // начать заново
-
+      this.activeIndex = 0;
+      this.isClickBtnEnd = false;
     },
-    nextOfFinish(e) {
+    nextOfFinish() {
       // кнопка вперед или закончить
-      if (!this.isEndStep) {
-        this.activeIndex += 1;
+      if (this.isEndStep) {
+        this.isClickBtnEnd = true;
       } else {
-        this.isOnClickBtnEnd = true;
+        this.activeIndex += 1;
       }
     },
     setActive(e) {
       // когда нажимаем на определенный шаг
       this.activeIndex = Number(e.target.textContent) - 1;
       if (!this.isEndStep) {
-        this.isOnClickBtnEnd = false;
+        this.isClickBtnEnd = false;
       }
     }
   },
