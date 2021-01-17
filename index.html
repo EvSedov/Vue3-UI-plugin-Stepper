@@ -36,14 +36,24 @@
             class="btn"
             @click="prev"
             :disabled="disabledBtnBack"
-          >{{ titleBtnBack }}</button>
+            v-if="!isOnClickBtnEnd"
+          >НАЗАД</button>
+          <button 
+            class="btn"
+            @click="reset"
+            v-else
+          >НАЧАТЬ ЗАНОВО</button>
           <button
             class="btn primary"
             @click="nextOfFinish"
-            :style="{
-              display: styleBtnNext,
-            }"
-          >{{ titleBtnNext }}</button>
+            v-if="!isEndStep"
+          >ВПЕРЕД</button>
+          <button
+            class="btn primary"
+            @click="nextOfFinish"
+            v-else
+            :style="{display: isOnClickBtnEnd ? 'none' : ''}"
+          >ЗАКОНЧИТЬ</button>
         </div>
       </div>
     </div>
