@@ -47,7 +47,7 @@
             class="btn primary"
             @click="nextOfFinish"
             :style="{'display': isClickBtnEnd ? 'none' : ''}"
-          >{{ titleBtnNext }}</button>
+          >{{ isEndStep ? 'ЗАВЕРШИТЬ' : 'ВПЕРЕД' }}</button>
         </div>
       </div>
     </div>
