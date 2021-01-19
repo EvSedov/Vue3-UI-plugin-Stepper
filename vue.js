@@ -48,9 +48,10 @@ const App = {
       this.activeIndex = index;
       if (this.isEndStep) {
         this.titleBtnNext = 'ЗАВЕРШИТЬ';
+      } else {
+        this.isClickBtnEnd = false;
+        this.titleBtnNext = 'ВПЕРЕД';
       }
-      this.isClickBtnEnd = false;
-      this.titleBtnNext = 'ВПЕРЕД';
     }
   },
   computed: {
