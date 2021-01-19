@@ -24,7 +24,7 @@
               { 'active': index === activeIndex },
               { 'done': index < activeIndex }
             ]"
-            @click="setActive"
+            @click="setActive(index)"
             v-for="(step, index) of steps"
           >  
             <span> {{ index + 1 }}</span>&nbsp;
@@ -46,14 +46,8 @@
           <button
             class="btn primary"
             @click="nextOfFinish"
-            v-if="!isEndStep"
-          >ВПЕРЕД</button>
-          <button
-            class="btn primary"
-            @click="nextOfFinish"
-            v-else
             :style="{'display': isClickBtnEnd ? 'none' : ''}"
-          >ЗАКОНЧИТЬ</button>
+          >{{ titleBtnNext }}</button>
         </div>
       </div>
     </div>
